@@ -9,6 +9,12 @@
  */
 public class MaximumSubArray{
 
+    /*
+     * Given an integer array nums, 
+     * find the contiguous subarray (containing at least one number) which has the largest sum, 
+     * and return its sum.
+     */
+
     public static void main(String[] args) {
         System.out.println(maximumSubArrayBruteForce(new int[] {-2, 1, -3, 4, -1, 2, 1, -5, }));
         System.out.println(maximumSubArrayOptimal(new int[] {-2, 1, -3, 4, -1, 2, 1, -5, }));
