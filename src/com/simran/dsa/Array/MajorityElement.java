@@ -12,33 +12,34 @@ public class MajorityElement {
 
      public static void main(String[] args) {
         System.out.println(majorityElementBruteForce(new int[] {5 ,5 ,5 ,5 ,3 ,2 ,5}));
-        System.out.println(majorityElementOptimal(new int[] {5 ,5 ,5 ,5 ,3 ,2 ,5}));
+        System.out.println(majorityElementOptimalI(new int[] {5 ,5 ,5 ,5 ,3 ,2 ,5}));
+        System.out.println(majorityElementOptimalII(new int[] {5 ,5 ,5 ,5 ,3 ,2 ,5}));
+        System.out.println(majorityElementOptimalIII(new int[] {5 ,5 ,5 ,5 ,3 ,2 ,5}));
      }
 
      // Brute Force
-     // Space O(n)
-     // Time O(n)
+     // O(n2)
 
      public static int majorityElementBruteForce(int[] nums) {
         int maxCount = nums.length / 2;
 
-        Map<Integer , Integer> fre = new HashMap<>();
-        for(int i = 0 ; i < nums.length ; i++) {
-            fre.put(nums[i], fre.getOrDefault(nums[i], 0) + 1);
+        for(int num: nums) {
+            int count = 0;
+            for(int i = 0 ; i < nums.length ; i++) {
+                if(num == nums[i]) {
+                    count++;
+                    if(count > maxCount) return num;
+                }
+            }
         }
-
-        for(Map.Entry<Integer , Integer> map: fre.entrySet()) {
-            if(map.getValue() > maxCount) return map.getKey();
-        }
-
         return -1;
      }
 
-     // Optimal
-     // O(n)
+     // Optimal I
+     // O(nlogn)
      // Constant space
 
-     public static int majorityElementOptimal(int[] nums) {
+     public static int majorityElementOptimalI(int[] nums) {
         int maxCount = nums.length / 2;
         int count = 1;
 
@@ -53,6 +54,46 @@ public class MajorityElement {
             }
         }
         return -1;
+     }
+
+     // Optimal II
+     // Space O(n)
+     // Time O(n)
+
+     public static int majorityElementOptimalII(int[] nums) {
+        int maxCount = nums.length / 2;
+
+        Map<Integer , Integer> fre = new HashMap<>();
+        for(int i = 0 ; i < nums.length ; i++) {
+            fre.put(nums[i], fre.getOrDefault(nums[i], 0) + 1);
+            if(fre.get(nums[i]) > maxCount) return nums[i];
+        }
+
+        return -1;
+     }
+
+     // Optimal III
+     // Moore's Voting Algorithm
+     // Frequency of element is like a power
+     // The highest frequency element will always have the highest power
+     // frequency if subtracted can never be zero if majority elements exists
+     // Intuition here is majority element will not let frequecy to be zero
+
+     public static int majorityElementOptimalIII(int[] nums) {
+        int frequency = 0;
+        int element = -1;
+        for(int i = 0 ; i < nums.length ; i++) {
+            if(frequency == 0) {
+                element = nums[i];
+            }
+            if(element == nums[i]) {
+                frequency++;
+            } else {
+                frequency--;
+            }
+        }
+
+        return element;
      }
     
 }
