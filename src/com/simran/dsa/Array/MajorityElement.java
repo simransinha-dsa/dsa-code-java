@@ -34,6 +34,10 @@ public class MajorityElement {
         return -1;
      }
 
+     // Optimal
+     // O(n)
+     // Constant space
+
      public static int majorityElementOptimal(int[] nums) {
         int maxCount = nums.length / 2;
         int count = 1;
