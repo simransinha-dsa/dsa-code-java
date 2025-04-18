@@ -2,6 +2,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ * @author simransinha
+ */
+
 public class MajorityElement {
 
     /*
@@ -92,7 +97,8 @@ public class MajorityElement {
                 frequency--;
             }
         }
-
+        // this can be changed to check if fre is greater than n /2 , if question is
+        // saying, answer can or cannot exists.
         return element;
      }
     
