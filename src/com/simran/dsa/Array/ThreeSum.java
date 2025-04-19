@@ -1,4 +1,7 @@
-package com.simran.leetcode.Blind75.Array;
+/**
+ *
+ * @author simransinha
+ */
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,7 @@
-
+/**
+ *
+ * @author simransinha
+ */
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,7 @@ public class EncodeAndDecode {
                 curr.append(str.charAt(i));
                 i++;
             }
-            sizes.add(Integer.parseInt(curr.toString()));
+            sizes.add(Integer.valueOf(curr.toString()));
             i++;
         }
 
