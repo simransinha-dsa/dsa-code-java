@@ -22,10 +22,12 @@ public class NextPermutation {
      * The replacement must be in place and use only constant extra memory.
      */
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(nextPermutation(new int[] {1 ,2 , 3 ,6 , 5 , 4})));
+        int[] nums = new int[] {1 ,2 , 3 ,6 , 5 , 4};
+        nextPermutation(nums);
+        System.out.println(Arrays.toString(nums));
     }
 
-    public static int[] nextPermutation(int[] nums) {
+    public static void nextPermutation(int[] nums) {
         // find the pivot which nums[i] < nums[i+1] starting from last
         // find the next larger number from pivot from the right
         // swap them
@@ -40,7 +42,7 @@ public class NextPermutation {
         int n = nums.length;
         int pivot = -1;
 
-        for(int j = n-1 ; j >= 0 ; j--) {
+        for(int j = n-1 ; j > 0 ; j--) {
             if(nums[j-1] < nums[j]) {
                 pivot = j-1;
                 break;
@@ -48,6 +50,7 @@ public class NextPermutation {
         }
         if(pivot == -1) { // which means the input array is the last combination of that numbers , so simply reverse or sort
             reverse(nums , 0);
+            return;
         }
 
         // find the next larger element than pivot
@@ -61,7 +64,6 @@ public class NextPermutation {
         }
         // to form smallest combination after pivot 
         reverse(nums, pivot+1);
-        return nums;
     }
 
     public static void reverse(int[] nums , int start) {
