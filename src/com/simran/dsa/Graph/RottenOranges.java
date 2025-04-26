@@ -4,18 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class RottenOranges {
-
-    public static class Node {
-        int time;
-        int x;
-        int y;
-
-        Node(int t , int i , int j) {
-            this.time = t;
-            this.x = i;
-            this.y = j; 
-        }
-    }
     public static void main(String[] args) {
         System.out.println(orangesRotting(new int[][] {{2 , 1 , 1} , {1 , 1 , 0} , {0 , 1 , 1}}));
         System.out.println(orangesRotting(new int[][] {{0}}));
