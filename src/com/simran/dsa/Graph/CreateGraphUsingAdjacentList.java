@@ -4,16 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateGraphUsingAdjacentList {
-    public static class Edge {
-        int source;
-        int destination;
-
-       public Edge(int s , int d) {
-            this.source = s;
-            this.destination = d;
-        }
-    }
-
+    
     public static void main(String[] args) {
         List<List<Edge>> graph = createGraphUsingAdjacencyList(4);
         printNeighbor(graph , 2);
