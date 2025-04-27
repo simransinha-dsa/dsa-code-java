@@ -5,10 +5,10 @@ import java.util.List;
 public class CycleDetectionInDirectedGraph {
     
     public static void main(String[] args) {
-        System.out.println(isCycle(4, new int[][] {{0 , 1} , {0 , 2} , {1 , 2} , {2 , 0} , {2 , 3}}));
+        System.out.println(isCycleUsingDFS(4, new int[][] {{0 , 1} , {0 , 2} , {1 , 2} , {2 , 0} , {2 , 3}}));
     }
 
-    public static boolean isCycle(int n , int[][] edges) {
+    public static boolean isCycleUsingDFS(int n , int[][] edges) {
         List<List<Integer>> graph = CreateGraphUsingAdjacentList.createGraphUsingAdjacencyListDirectedGraph(n, edges);
 
         boolean[] recStack = new boolean[n];
@@ -41,5 +41,13 @@ public class CycleDetectionInDirectedGraph {
         }
         recStack[curr] = false;
         return false;
+    }
+
+    public static boolean isCycleUsingBFS(int n , int[][] edges) {
+        // this can be done using topological sorting by BFS.
+        // while adding to the queue , increase the count
+        // if the count matches the number of nodes , then yes otherwise no
+
+        return true;
     }
 }
