@@ -7,11 +7,11 @@ import java.util.Stack;
 public class DepthFirstSearch {
     
     public static void main(String[] args) {
-        List<List<Edge>> graph = CreateGraphUsingAdjacentList.createGraphUsingAdjacencyList(4);
+        List<List<Integer>> graph = CreateGraphUsingAdjacentList.createGraphUsingAdjacencyList(4 , new int[][] {{0 , 1} , {0 , 2} , {1 , 2} , {2 , 3}});
         dfs(graph);
     }
 
-    public static void dfs(List<List<Edge>> graph) {
+    public static void dfs(List<List<Integer>> graph) {
         List<Integer> result1 = new ArrayList<>();
         boolean[] visited = new boolean[graph.size()];
 
@@ -35,20 +35,20 @@ public class DepthFirstSearch {
         
     }
 
-    public static void dfsUtil(List<List<Edge>> graph , List<Integer> result , boolean[] vis , int curr) {
+    public static void dfsUtil(List<List<Integer>> graph , List<Integer> result , boolean[] vis , int curr) {
         // O(v + e)
         result.add(curr);
         vis[curr] = true;
 
         for(int i = 0 ; i < graph.get(curr).size(); i++) {
-            Edge e = graph.get(curr).get(i);
-            if(!vis[e.destination]) {
-                dfsUtil(graph , result , vis , e.destination);
+            int node = graph.get(curr).get(i);
+            if(!vis[node]) {
+                dfsUtil(graph , result , vis , node);
             }
         }
     }
 
-    public static void dfsUtilIterative(List<List<Edge>> graph , List<Integer> result , boolean[] vis , int curr) {
+    public static void dfsUtilIterative(List<List<Integer>> graph , List<Integer> result , boolean[] vis , int curr) {
         Stack<Integer> stack = new Stack<>();
 
         stack.push(curr);
@@ -58,10 +58,10 @@ public class DepthFirstSearch {
             int node = stack.pop();
             result.add(node);
             for(int i = 0 ; i < graph.get(node).size(); i++) {
-                Edge e = graph.get(node).get(i);
-                if(!vis[e.destination]) {
-                    stack.push(e.destination);
-                    vis[e.destination] = true;
+                Integer neighbor = graph.get(node).get(i);
+                if(!vis[neighbor]) {
+                    stack.push(neighbor);
+                    vis[neighbor] = true;
                 }
             }
         }

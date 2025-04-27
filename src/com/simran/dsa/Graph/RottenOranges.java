@@ -53,9 +53,11 @@ public class RottenOranges {
             }
         }
 
-        for(int i = 0 ; i < grid.length ; i++) {
-            for(int j = 0 ; j < grid[i].length ; j++) {
-                if(grid[i][j] == 1) return -1;
+        for (int[] grid1 : grid) {
+            for (int j = 0; j < grid1.length; j++) {
+                if (grid1[j] == 1) {
+                    return -1;
+                }
             }
         }
 

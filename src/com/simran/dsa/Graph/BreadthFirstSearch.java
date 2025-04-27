@@ -8,7 +8,7 @@ import java.util.Queue;
 public class BreadthFirstSearch {
     
     public static void main(String[] args) {
-        List<List<Edge>> graph = CreateGraphUsingAdjacentList.createGraphUsingAdjacencyList(4);
+        List<List<Integer>> graph = CreateGraphUsingAdjacentList.createGraphUsingAdjacencyList(4 , new int[][] {{0 , 1} , {0 , 2} , {1 , 2} , {2 , 3}});
         List<Integer> result = bfs(graph);
         for(int i = 0 ; i < result.size(); i++) {
             System.out.print(result.get(i) + " ");
@@ -17,7 +17,7 @@ public class BreadthFirstSearch {
         System.out.println();
     }
 
-    public static List<Integer> bfs(List<List<Edge>> adj) {
+    public static List<Integer> bfs(List<List<Integer>> adj) {
         // code here
         // O(v + e) // if v is too large then e or vice versa
         boolean[] visited = new boolean[adj.size()];
@@ -34,7 +34,7 @@ public class BreadthFirstSearch {
             int node = queue.poll();
             result.add(node);
             for(int i = 0 ; i < adj.get(node).size(); i++) {
-                int neighbor = adj.get(node).get(i).destination;
+                int neighbor = adj.get(node).get(i);
                 if(!visited[neighbor]) {
                     queue.add(neighbor);
                     visited[neighbor] = true;
