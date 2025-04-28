@@ -63,10 +63,12 @@ public class DijkstraAlgorithm {
             // update the distance for its neighbor
             for(int i = 0 ; i < graph.get(curr).size(); i++) {
                 int neighbor = graph.get(curr).get(i);
-                if(distance[curr] + 1 < distance[neighbor]) {
-                    distance[neighbor] = distance[curr] + 1;
+                if(!visited[neighbor]) {
+                    if(distance[curr] + 1 < distance[neighbor]) {
+                        distance[neighbor] = distance[curr] + 1;
+                        pq.add(new Pair(neighbor , distance[neighbor]));
+                    }
                 }
-                pq.add(new Pair(neighbor , distance[neighbor]));
             }
         }
 
