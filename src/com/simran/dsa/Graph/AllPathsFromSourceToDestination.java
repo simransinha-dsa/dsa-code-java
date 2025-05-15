@@ -1,7 +1,9 @@
 package com.simran.dsa.Graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class AllPathsFromSourceToDestination {
     public static void main(String[] args) {
@@ -40,5 +42,42 @@ public class AllPathsFromSourceToDestination {
             dfs(graph , allPaths , path , neighbor , target);
             path.remove(path.size() - 1);
         }
+    }
+
+    public static List<List<Integer>> allPathsUsingBFS(int n , int[][] edges , int source , int target) {
+        List<List<Integer>> graph = new ArrayList<>();
+
+        for(int i = 0 ; i < n ; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for(int[] edge: edges) {
+            graph.get(edge[0]).add(edge[1]);
+        }
+
+        Queue<List<Integer>> queue = new LinkedList<>();
+
+        List<Integer> startPath = new ArrayList<>();
+        List<List<Integer>> allPaths = new ArrayList<>();
+
+        startPath.add(source);
+
+        queue.add(startPath);
+
+        while(!queue.isEmpty()) {
+            List<Integer> path = queue.poll();
+            int lastNode = path.get(path.size() - 1);
+
+            for(int nextNode: graph.get(lastNode)) {
+                List<Integer> tempPath = new ArrayList<>(path);
+                tempPath.add(nextNode);
+                if(nextNode == target) {
+                    allPaths.add(new ArrayList<>(tempPath));
+                } else {
+                    queue.add(new ArrayList<>(tempPath));
+                }
+            }
+        }
+        return allPaths;
     }
 }

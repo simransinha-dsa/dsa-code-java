@@ -47,7 +47,7 @@ public class BreadthFirstSearch {
 
     // if we need to traverse on a graph with disconnected components 
     // then we need to have util function with exact code of bfs
-    // that util needs to be called in a for loop of visited boolean
+    // that util needs to be called in a on loop of visited boolean
     // because disconnected components will not be visited on one go
 }
 
