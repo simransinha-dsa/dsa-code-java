@@ -2,8 +2,10 @@ package com.simran.dsa.Graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class MinimumHeightTree {
     public static void main(String[] args) {
@@ -61,5 +63,57 @@ public class MinimumHeightTree {
         }
 
         return maxDepth + 1 ; // 1 for root;
+    }
+
+    public static List<Integer> minimumHeightTree(int n , int[][] edges) {
+
+        // Kahn's algorithm
+        if(n == 1) return List.of(0);
+
+        List<List<Integer>> graph = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        Queue<Integer> queue = new LinkedList<>();
+
+        for(int i = 0 ; i < n ; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        int[] indegree = new int[n];
+
+        for(int[] edge: edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+
+            indegree[edge[0]]++;
+            indegree[edge[1]]++;
+        }
+
+        for(int i = 0 ; i < n ; i++) {
+            if(indegree[i] == 1) { // leaf node
+                queue.add(i);
+            }
+        }
+
+        while(n > 2) { // we will see if graph has 2 or 1 node left
+            int size = queue.size();
+
+            n -= size;
+
+            while(size-- != 0) {
+                int node = queue.poll();
+                for(int neighbors: graph.get(node)) {
+                    indegree[neighbors]--;
+                    if(indegree[neighbors] == 1) {
+                        queue.add(neighbors);
+                    }
+                }
+            }
+        }
+
+        while(!queue.isEmpty()) {
+            result.add(queue.poll());
+        }
+
+        return result;
     }
 }
