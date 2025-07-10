@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Microblog (Pretty Horizontal Cards)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1000px;
+      margin: 20px auto;
+      background: #f9f9fb;
+      padding: 10px;
+    }
+    h2 {
+      color: #333;
+    }
+    .card-list {
+      display: flex;
+      flex-wrap: wrap; /* wrap to new line if too many cards */
+      gap: 12px;       /* space between cards */
+      margin-top: 10px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 200px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+    .content {
+      margin-bottom: 8px;
+      color: #444;
+      word-wrap: break-word;
+    }
+    .content span {
+      color: #007BFF;  /* nicer blue for hashtags */
+      cursor: pointer;
+    }
+    .actions {
+      text-align: right;
+    }
+    button {
+      background: #007BFF;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    input {
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-right: 6px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script>
+    const store = Vue.reactive({
+      posts: []
+    });
+
+    const testPosts = [
+      { id: 1, content: "Hello Vue! #vue #composition", likes: 0 },
+      { id: 2, content: "Welcome to microblog! #microblog", likes: 2 },
+      { id: 3, content: "Try liking and adding new posts! #fun", likes: 1 }
+    ];
+  </script>
+
+  <script>
+    const Controls = {
+      template: `<div style="margin-bottom:12px;">
+        <input v-model="newPost" placeholder="Write something...">
+        <button @click="add">Add</button>
+      </div>`,
+      setup(props, { emit }) {
+        const newPost = Vue.ref('');
+
+        function add() {
+          if (newPost.value.trim() !== '') {
+            emit('new-post', { id: Date.now(), content: newPost.value, likes: 0 });
+            newPost.value = '';
+          }
+        }
+
+        return { newPost, add };
+      }
+    };
+  </script>
+
+  <script>
+    const Hashtag = {
+      props: ['post'],
+      template: `
+        <div class="card">
+          <div class="content" v-html="formattedContent"></div>
+          <div class="actions">
+            <button @click="like">👍 {{ post.likes }}</button>
+          </div>
+        </div>
+      `,
+      setup(props) {
+        const formattedContent = Vue.computed(() => {
+          return props.post.content.replace(/(#\\w+)/g, '<span>$1</span>');
+        });
+
+        function like() {
+          props.post.likes += 1;
+        }
+
+        return { formattedContent, like };
+      }
+    };
+  </script>
+
+  <script>
+    const App = {
+      template: `
+        <div>
+          <h2>Microblog</h2>
+          <controls @new-post="addPost"></controls>
+          <div class="card-list">
+            <hashtag v-for="post in posts" :key="post.id" :post="post"></hashtag>
+          </div>
+        </div>`,
+      setup() {
+        const posts = Vue.ref([...testPosts]);
+
+        function addPost(post) {
+          posts.value.push(post);
+          store.posts.push(post);
+        }
+
+        return { posts, addPost };
+      }
+    };
+  </script>
+
+  <script>
+    const app = Vue.createApp(App);
+    app.component('controls', Controls);
+    app.component('hashtag', Hashtag);
+    app.mount('#app');
+  </script>
+</body>
+</html>
