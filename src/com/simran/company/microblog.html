@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Microblog (Pretty Horizontal Cards)</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -72,65 +73,6 @@
   </style>
 </head>
 <body>
-    <div id="app"></div>
-
-    <script>
-        const store = Vue.reactive({
-             posts: []
-        });
-
-        const testPosts = [
-            { id: 1, content: "Hello Vue! #vue #composition", likes: 0 },
-            { id: 2, content: "Welcome to microblog! #microblog", likes: 2 },
-            { id: 3, content: "Try liking and adding new posts! #fun", likes: 1 }
-        ]
-    </script>
-
-    <script>
-        const Control = {
-          template: 
-            `<div style="margin-bottom:12px;">
-              <input v-model="newPosts" placeholder="Write Something here...">
-              <button v-on:click="">Add</button>
-            </div>`,
-           
-           setup(_, { emit}) {
-              const newPosts = Vue.ref('');
-
-              function add() {
-                  if(newPosts.value.trim() != ' ') {
-                    emit('new-post' , {id: Date.now() , content: newPosts.value , likes: 0});
-                    newPost.value = '';
-                  }
-              }
-
-              return { newPosts , add };
-           }
-        };
-    </script>
-
-    <script>
-        const HashTag = {
-          props: ['post'],
-          template: `
-            <div class="card">
-              <div class="content" v-html="formattedContent"></div>
-              <div class="actions">
-                <button v-on:click="addLike">👍 {{post.likes}} </button>
-              </div>
-            </div>
-          `,
-          setup(props) {
-            const formattedContent = Vue.compute(() => {
-              return props.post.content.replace(/(#\w+)/g, '<span>$1</span>');
-            });
-
-            function addLike() {
-              props.post.likes += 1;
-            }
-            return { formattedContent , addLike };
-          }
-        }
-    </script>
+    
 </body>
 </html>

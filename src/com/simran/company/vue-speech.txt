@@ -52,7 +52,19 @@ They make your template interactive, declarative, and reactive.
 -> there are different directives like v-if , v-for and so on.
 -> Event handling is the process of responding to user interactions or browser events (like clicks, key presses, mouse movements, 
 form submissions, etc.) by running specific code in your application.
--> in this example , click is the eventName , so on click of this button call the method increment. 
+-> in this example , click is the eventName , so on click of this button call the method increment.
+
+4. Computes and Watchers
+A computed property in Vue is like a smart, cached, reactive value.
+It automatically recalculates when its reactive dependencies change, but only then.
+When you want to derive some value from other reactive data (e.g., formatted content, totals, filters).
+When the derived value is read-only and depends purely on reactive data.
+WHY - Avoid recalculating expensive operations unnecessarily.
+
+A watcher lets you run custom code when some reactive data changes.
+When to use:
+When you want to do side effects: e.g., call an API, log to console, update another variable.
+When you need to react to change, but you don’t need a new derived value.
 
 
 ###############################################################

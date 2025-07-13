@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Vue Js</title>
+</head>
+<body>
+    <div id="app">
+        <p> {{ message }} </p>
+        <input v-model="message"></input>
+        <button v-on:click="increaseCount"> {{ count }} </button>
+        <button v-on:click="increment('a')">{{ numbers.a }} </button>
+        <button v-on:click="increment('b')">{{ numbers.b }} </button>
+        <p> Total = {{ total }} </p>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            setup() {
+                const message = Vue.ref('Hello Vue!');
+
+                // compute
+                const numbers = Vue.reactive({a:0 , b:0});
+
+                const increment = (n) => {
+                    numbers[n]++;
+                }
+
+                const total = Vue.computed(() => count.value + numbers.a + numbers.b);
+                const count = Vue.ref(0);
+
+                function increaseCount() {
+                    count.value++;
+                }
+
+                // watchers
+                Vue.watch(numbers , (newVal) => {
+                    console.log(newVal);
+                });
+
+                Vue.watchEffect(() => {
+                    console.log(numbers.a);
+                });
+
+                return { message , count , increaseCount, numbers , increment , total};
+            }
+        });
+        app.mount("#app");
+    </script>
+</body>
+</html>
