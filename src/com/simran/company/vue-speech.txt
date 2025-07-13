@@ -1,0 +1,173 @@
+
+##################################################
+
+1. Basic Set up 
+-> Hi Everyone , now that we know what is Vue js , we should get started with Vue js concepts, but before we learn vue concepts ,
+let’s quickly set up a basic project together. For now , we will keep it simple: a single HTML file with Vue from CDN , so everyone 
+can follow without installing anything. We will share the basic html file with you all and it will have the Vue js script included.
+
+-> In this html , we started with the script tag where we are providing a url for Vue js. It will help the browser to download Vue js library 
+and load it in the webpage. 
+
+-> Vue 3 is distributed in different builds for different use cases.
+-> This is perfect for simple projects with just an HTML file — you don’t need bundlers or npm.
+
+2. Vue Instance and Data Binding
+-> Now that we have a basic page which is running using Vue js global library, lets move on to understand few of the concepts of Vue.
+-> What is Vue Instance 
+-> At its core , Vue works by creating something called a Vue instance. 
+-> You can think of it like the brain of your Vue app: it stores the data (state) your app uses, the functions (methods) your app runs,
+and it knows where in your HTML it should control and render changes.
+
+-> Let's see how to create one
+We create a vue instance using a method provided by vue called createApp(). This method will have everything you want to have in your webpage.
+setup() is the place to declare your reactive state, computed properties, and methods.
+The template cannot directly access variables or functions declared inside setup() , so we need to return those. 
+How my Vue will know where to render the page , as we all know html deals in div or other tags and we define each div differently.
+So if I want to render my Vue component , I need to mount that div in my vue instance which I just created. 
+
+After running the basic html , I will talk about the message attribute. The way we are rendering it , it is called One way binding.
+so what is Data Binding - Data binding is the connection between your data (JavaScript) and the DOM (HTML template).
+
+One way Binding -> This is the most common form, used to display data in the template, like what we saw with message attribute. If the value of message
+changes in javascript , it will get changed in template.
+
+Two way Binding -> This allows changes in the DOM to update the data, and vice versa.
+Used mainly in form inputs with v-model.
+
+Lets see the example.
+
+Now this brings me to another concept in Vue which is reactivity. If you have noticed i have used a method ref. Vue makes data reactive 
+using ref or reactive.When a reactive property changes, Vue efficiently updates only the parts of the DOM that use it.
+
+3. Methods and Directives
+-> In Vue, methods are just JavaScript functions that handle logic, events, or data changes in your component.
+-> We define methods inside setup() , and put it in the return section to be available in template.
+-> lets look at one example.
+-> v-on is a Vue directive used to listen to DOM events and run JavaScript code when those events happen.
+-> It’s part of Vue’s powerful event handling system.
+-> A directive in Vue is a special attribute (starting with v-) that tells Vue to do something reactive or dynamic in the DOM.
+They make your template interactive, declarative, and reactive.
+-> Here in this example , we saw v-on is the directive telling Vue: “Listen for the click event on this button.”
+-> there are different directives like v-if , v-for and so on.
+-> Event handling is the process of responding to user interactions or browser events (like clicks, key presses, mouse movements, 
+form submissions, etc.) by running specific code in your application.
+-> in this example , click is the eventName , so on click of this button call the method increment. 
+
+
+###############################################################
+
+DEMO
+
+-> Before we get into the details, let me quickly show you what we're going to build today — 
+so you know what all these parts add up to.
+
+This is a simple microblog app called Fidelity Connect
+At the top, we have an input and an add button — that’s our Controls component.
+Below that, you see these nice horizontal cards, each showing a message.
+Some messages have hashtags — those hashtags are styled automatically by our app.
+And we can also like posts by clicking the 👍 button.
+
+All of this is built in Vue 3 using the Composition API, broken into small, reusable components:
+Controls for adding new posts,
+Hashtag for displaying each post card,
+and finally an App component that ties everything together.
+
+Now that we know what are we going to build and what all components it has , lets start building.
+Like I mentioned earlier , we are building smaller components , a way of writing cleaner and modular code.
+After we define all are components , we will register those components in our actual app compoent which is the heart of our 
+microblog. We call it global registration , and This will be covered later in the session. 
+
+Before we write the actual Vue components, let’s set up some data that our app will use.
+We want to start the app with a few sample posts, and we also want a store to keep track of posts reactively.
+
+We’re creating a reactive object called store and why ?
+We need the store because we have shared data (the list of posts) that multiple components need to use and update which you will 
+see as we start writing the data. So this is a reactive data which we are keeping to be used and maintained by different
+components in the app.
+
+-> Define testPosts: This is just some initial data so the app isn’t empty when it starts.
+
+Now , lets move on to our smaller components 
+The first component we are going to build is Control section , where we have an input to write a new blog and an 
+add button to add that blog to the list of existing posts.
+
+In Vue 3, we can define a component as a plain JavaScript object and later register it using app.component which we will learn later.
+
+Why we are describing the components in each script
+We do this to keep each component definition separate and organized,
+so it’s easier to read, maintain, and explain during the demo.
+
+Lets add template now , template is the html structure of our component.
+So like I have showed , we have an input and a button , so we will create the template.
+
+-> Add the setup function
+Every composition API component has a setup function.
+Vue calls this function when the component is created.
+
+We have props like an input parameter ,it holds properties passed from the parent. // This is not important as we donot 
+need any input parament from parent App , so we can have it in a way like this , _.
+Not every component needs props — some components only emit events to the parent, and that’s okay
+{ emit }: is how we send custom events back to the parent.
+
+We have an input where I will write the blog , so where to store it , so for that we will have a creative state called
+newPosts which will be reactive in nature and intially it will be an empty string.
+
+So lets change the template where we have input tag , we need to use this reactive state newPosts there. I am guessing everybody is
+understanding why.
+
+Now , we need to have an Add function , which just read the input value and emit the details of new post to the parent app using emit. 
+Emit is also acting as a eventHandling feature. This string value new-post will be used an eventName in the app component.
+
+Why don’t we call createApp inside each component?
+In Vue 3, createApp is used to:
+create the main Vue application instance,
+define which component is the root of the app,
+and finally mount it into the DOM.
+
+This is done once, at the very top level.
+
+Components in Vue are not standalone apps.
+They are part of the same app, managed by the single root Vue instance created by createApp.
+You’d be creating multiple separate Vue apps, each with its own scope.
+
+By keeping it self-contained, it becomes reusable: anywhere we need an 'add post' UI, we can drop in <controls>.
+
+Now let’s build our second reusable component: Hashtag.
+This one is responsible for showing each post inside a nice card, highlighting hashtags and adding a like button.
+Just like before, we start by defining the component as a plain JavaScript object.
+
+This tells Vue that this component expects to receive a prop called post from its parent.
+This template creates the HTML for each post card:
+<div class="card"> → the outer container styled nicely with CSS
+
+Now , <div class="content" v-html="formattedContent"> 
+shows the post content, with hashtags highlighted (we’ll see how in a minute).
+
+<button @click="like">👍 {{ post.likes }}</button> → shows number of likes and increases likes when clicked.
+
+
+instead of {{ post.content }}, we will use some formatted content , so the hashtags become real <span> tags in the DOM.
+We want to show # tags in blue color and have a clickable feature , so we need to add it as a span in html element ,
+so that we can have its own style sheet.
+
+So how can we get the content in that way , we learnt about compute , where we can compute values before it gets rendered.
+
+We create a computed property called formattedContent.
+It takes the post content and uses replace with a regular expression:
+Finds anything that starts with # followed by letters or numbers.
+Wraps it in a <span> tag, so we can style it (like making it blue).
+"Because it’s a computed property, Vue automatically updates it if props.post.content changes.
+
+WHY V-HTML ?
+since we are converting , the hashtag as a separate span , we are using v-html which helps us to render it as span the html tag , 
+if we have not used it as v-html ,it would have rendered everything as plain string including string.
+
+Then add addLike method 
+
+HOW POST.LIKE works as we donot have a direct attribute returned from setup 
+This is because:
+When you declare props in setup(props),
+Vue automatically makes every property in props available in the template as if you had returned it.
+
+

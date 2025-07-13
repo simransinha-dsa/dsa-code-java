@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Microblog (Pretty Horizontal Cards)</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -73,8 +74,6 @@
 <body>
   <div id="app"></div>
 
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
   <script>
     const store = Vue.reactive({
       posts: []
@@ -93,7 +92,7 @@
         <input v-model="newPost" placeholder="Write something...">
         <button @click="add">Add</button>
       </div>`,
-      setup(props, { emit }) {
+      setup(_, { emit }) {
         const newPost = Vue.ref('');
 
         function add() {
@@ -121,7 +120,7 @@
       `,
       setup(props) {
         const formattedContent = Vue.computed(() => {
-          return props.post.content.replace(/(#\\w+)/g, '<span>$1</span>');
+          return props.post.content.replace(/(#\w+)/g, '<span>$1</span>');
         });
 
         function like() {
@@ -137,7 +136,7 @@
     const App = {
       template: `
         <div>
-          <h2>Microblog</h2>
+          <h2>Fidelity Connect</h2>
           <controls @new-post="addPost"></controls>
           <div class="card-list">
             <hashtag v-for="post in posts" :key="post.id" :post="post"></hashtag>
